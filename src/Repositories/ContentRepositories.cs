@@ -54,4 +54,10 @@ public class ContentRepositories(IServiceProvider serviceProvider)
     /// </summary>
     public IWebPageDataContextRetriever GetWebPageDataContext()
         => serviceProvider.GetRequiredService<IWebPageDataContextRetriever>();
+
+    /// <summary>
+    /// Gets the website channel context.
+    /// </summary>
+    public IWebsiteChannelContext GetWebsiteChannelContext()
+        => serviceProvider.GetRequiredService<IWebsiteChannelContext>();
 }
