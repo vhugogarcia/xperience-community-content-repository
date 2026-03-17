@@ -33,6 +33,7 @@ public static class Configuration
         services.AddScoped(typeof(IContentTypeRepository<>), typeof(ContentTypeRepository<>));
         services.AddScoped(typeof(IPageTypeRepository<>), typeof(PageTypeRepository<>));
         services.AddScoped<IMediaFileRepository, MediaFileRepository>();
+        services.AddScoped<IWebPageRepository, WebPageRepository>();
         services.AddScoped<ICacheDependencyBuilder, Builders.CacheDependencyBuilder>();
 
         // Register specific content type repositories based on configuration

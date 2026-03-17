@@ -27,6 +27,13 @@ public class ContentRepositories(IServiceProvider serviceProvider)
     /// <returns>The media file repository.</returns>
     public IMediaFileRepository GetMediaFileRepository()
         => serviceProvider.GetRequiredService<IMediaFileRepository>();
+    
+    /// <summary>
+    /// Gets the web page repository.
+    /// </summary>
+    /// <returns>The web page repository.</returns>
+    public IWebPageRepository GetWebPageRepository()
+        => serviceProvider.GetRequiredService<IWebPageRepository>();
 
     /// <summary>
     /// Gets the cache dependency builder.
