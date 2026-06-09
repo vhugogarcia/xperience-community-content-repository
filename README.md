@@ -8,11 +8,12 @@ This package provides a comprehensive repository pattern implementation for Kent
 
 ## Library Version Matrix
 
-| Xperience Version | Library Version |
-|-------------------|-----------------|
-| >= 30.6.0         | >= 1.0.0        |
+| Xperience Version | Library Version | .NET Version |
+|-------------------|-----------------|--------------|
+| >= 31.5.3         | >= 1.1.0        | .NET 10      |
+| >= 30.6.0         | >= 1.0.0        | .NET 8       |
 
-> **Note:** The latest version that has been tested is 30.6.0
+> **Note:** The latest version that has been tested is 31.5.3
 
 ## ⚙️ Package Installation
 
