@@ -89,7 +89,7 @@ public static class CacheDependencyHelper
     /// <param name="items">The content items.</param>
     /// <returns>An array of cache keys.</returns>
     public static string[] CreateContentItemKeys<T>(IEnumerable<T>? items) where T : IContentItemFieldsSource =>
-        items?.Select(x => $"contentitem|byid|{x.SystemFields.ContentItemGUID}")?.ToArray() ?? [];
+        items?.Select(x => CreateContentItemGUIDKey(x.SystemFields.ContentItemGUID))?.ToArray() ?? [];
 
     /// <summary>
     /// Creates cache keys for web page items by their IDs.

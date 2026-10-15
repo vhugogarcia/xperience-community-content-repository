@@ -12,7 +12,9 @@ public class CacheDependencyBuilder : ICacheDependencyBuilder
             return null;
         }
 
-        return new CMSCacheDependency() { CacheKeys = [.. keys] };
+        // CacheHelper.GetCacheDependency registers the dummy keys that Xperience touches when content changes.
+        // A CMSCacheDependency created directly does not, so the cached data would not be removed on publish.
+        return CacheHelper.GetCacheDependency([.. keys]);
     }
 
 

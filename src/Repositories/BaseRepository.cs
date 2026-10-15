@@ -101,7 +101,7 @@ public abstract class BaseRepository
             }
             else
             {
-                var dependency = CacheDependencyBuilder.Create(result);
+                var dependency = GetDefaultCacheDependency(result);
 
                 if (dependency is not null)
                 {
@@ -157,7 +157,7 @@ public abstract class BaseRepository
             }
             else
             {
-                var dependency = CacheDependencyBuilder.Create(result);
+                var dependency = GetDefaultCacheDependency(result);
 
                 if (dependency is not null)
                 {
@@ -171,6 +171,30 @@ public abstract class BaseRepository
 
             return result;
         }, cacheSettings, cancellationToken);
+    }
+
+    /// <summary>
+    /// Gets the cache dependency keys for the scope of the repository's queries (for example, all items of its content type).
+    /// They are added to the default cache dependency so that new or newly published items also clear the cached results,
+    /// not only changes to the items that were returned.
+    /// </summary>
+    protected virtual IEnumerable<string> ScopeDependencyKeys => [];
+
+    /// <summary>
+    /// Creates the default cache dependency of a query result: the returned items, their linked items and the repository's scope.
+    /// </summary>
+    /// <typeparam name="T">The type of the result items.</typeparam>
+    /// <param name="result">The query result.</param>
+    /// <returns>The cache dependency, or <see langword="null"/> when there are no keys.</returns>
+    private CMSCacheDependency? GetDefaultCacheDependency<T>(IEnumerable<T> result)
+    {
+        string[] keys = (CacheDependencyBuilder.Create(result)?.CacheKeys ?? [])
+            .Concat(ScopeDependencyKeys)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        // CacheHelper.GetCacheDependency registers the keys so that Xperience can clear the cached data when they are touched
+        return keys.Length > 0 ? CacheHelper.GetCacheDependency(keys) : null;
     }
 
     /// <summary>
