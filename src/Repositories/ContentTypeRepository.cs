@@ -17,6 +17,9 @@ public sealed class ContentTypeRepository<TEntity>(
 
     public override string CachePrefix => $"data|{contentType}|{WebsiteChannelContext.WebsiteChannelName}";
 
+    /// <inheritdoc />
+    protected override IEnumerable<string> ScopeDependencyKeys => CacheDependencyHelper.CreateContentItemTypeKeys([contentType]);
+
     #region Get by Identifiers
 
     /// <inheritdoc />
@@ -135,7 +138,7 @@ public sealed class ContentTypeRepository<TEntity>(
             .WithLanguage(languageName);
 
         var result = await ExecuteContentQuery<TSchema>(builder,
-            () => CacheHelper.GetCacheDependency($"{schemaName}|all"),
+            dependencyFunc ?? (() => CacheHelper.GetCacheDependency($"contentitem|byschema|{schemaName}")),
             cancellationToken, CachePrefix, nameof(GetAllBySchema), schemaName, maxLinkedItems);
 
         return result;

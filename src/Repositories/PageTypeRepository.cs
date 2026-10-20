@@ -8,6 +8,10 @@ public sealed class PageTypeRepository<TEntity>(IProgressiveCache cache, IConten
     private readonly string? contentType = typeof(TEntity)?.GetContentTypeName() ?? string.Empty;
     public override string CachePrefix => $"data|{contentType}|{WebsiteChannelContext.WebsiteChannelName}";
 
+    /// <inheritdoc />
+    protected override IEnumerable<string> ScopeDependencyKeys =>
+        CacheDependencyHelper.CreateWebPageItemTypeKeys(string.IsNullOrEmpty(contentType) ? [] : [contentType], WebsiteChannelContext.WebsiteChannelName);
+
     #region Get by Identifiers
 
     /// <inheritdoc />
